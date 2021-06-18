@@ -7,7 +7,7 @@ dice <- function(num, sides){
 dice_reroll <- function(num, sides, reroll, times=0){
   rolls <- dice(num, sides)
   if ((length(sides) == 1 && all(1:sides %in% reroll)) ||
-      (all(sides %in% reroll))){
+      (length(sides) != 1 && all(sides %in% reroll))){
     print('Reroll values cannot be identical to all sides.')
   } else if (times == 0){
     while (any(rolls %in% reroll)){
@@ -20,3 +20,4 @@ dice_reroll <- function(num, sides, reroll, times=0){
   }
     return(rolls)
 }
+du
