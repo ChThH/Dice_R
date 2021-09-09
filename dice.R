@@ -20,4 +20,9 @@ dice_reroll <- function(num, sides, reroll, times=0){
   }
     return(rolls)
 }
-du
+
+roll_char_att <- function(num = 4, sides = 6, reroll = 0, drop = 1){
+  re <- dice_reroll(num, sides, reroll, times = 0)
+  dice_drop <- sort(re)[-(1:drop)]
+  return(dice_drop)
+}
