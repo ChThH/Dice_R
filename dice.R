@@ -26,3 +26,29 @@ roll_char_att <- function(num = 4, sides = 6, reroll = 0, drop = 1){
   dice_drop <- sort(re)[-(1:drop)]
   return(dice_drop)
 }
+
+# written for kid's homework
+dicevar <- function(diceface = 6, tol = 0.005, pernum = 5){
+  ndice <- diceface
+  dicetable <- data.frame (dicerol = 0, ndice = ndice, perc = 0, within = 6)
+  while (sum(dicetable$wthin) < diceface) { 
+    i <- 1
+    while (i <= pernum){
+      dicerol <- sample(diceface, ndice, T)
+      dicetable <- data.frame(table(dicerol))
+      dicetable$ndice <- ndice
+      dicetable$perc <- dicetable$Freq / ndice
+      dicetable$percexp <- 1/diceface
+      dicetable$percdiff <- dicetable$perc - 1/diceface
+      dicetable$i <- i
+      dicetable$wthin <- dicetable$perc > (1/diceface - tol) & dicetable$perc < (1/diceface + tol)
+      # print(dicetable)
+      i <- i + 1
+      if (sum(dicetable$wthin) != diceface) {break}
+    }
+    ndice <- ndice + 1
+  }
+  View(dicetable)
+  return(dicetable)
+}
+
