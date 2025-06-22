@@ -28,8 +28,11 @@ roll_char_att <- function(num = 4, sides = 6, reroll = 0, drop = 1){
 }
 
 # written for kid's homework
-dicevar <- function(diceface = 6, tol = 0.005, pernum = 5){
-  ndice <- diceface
+dicevar <- function(diceface = 6, tol = 0.005, pernum = 5, increment = 100, initial = NULL){
+  if (missing(initial)) {
+    initial <- increment
+  }
+  ndice <- initial
   dicetable <- data.frame (dicerol = 0, ndice = ndice, perc = 0, within = 6)
   while (sum(dicetable$wthin) < diceface) { 
     i <- 1
@@ -42,11 +45,11 @@ dicevar <- function(diceface = 6, tol = 0.005, pernum = 5){
       dicetable$percdiff <- dicetable$perc - 1/diceface
       dicetable$i <- i
       dicetable$wthin <- dicetable$perc > (1/diceface - tol) & dicetable$perc < (1/diceface + tol)
-      # print(dicetable)
+      print(dicetable)
       i <- i + 1
       if (sum(dicetable$wthin) != diceface) {break}
     }
-    ndice <- ndice + 1
+    ndice <- ndice + increment
   }
   View(dicetable)
   return(dicetable)
